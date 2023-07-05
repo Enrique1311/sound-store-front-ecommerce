@@ -1,17 +1,21 @@
 import { styled } from "styled-components";
 import Center from "./Center";
 import ProductBox from "./ProductBox";
+import { my_grey } from "../lib/colors";
 
 const ProductsGrid = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	gap: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 25px;
 	padding-top: 20px;
 `;
 
 const Title = styled.h2`
 	font-size: 2rem;
 	margin-bottom: 0;
+	color: ${my_grey};
+	text-align: center;
 `;
 
 const NewProducts = ({ products }) => {

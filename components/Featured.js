@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Center from "./Center";
 import { styled } from "styled-components";
 import PrimaryBtn from "./PrimaryBtn";
 import ButtonLink from "./ButtonLink";
 import { my_grey } from "../lib/colors";
+import { CartContext } from "./CartContext";
 
 const Bg = styled.div`
 	background-color: ${my_grey};
 	color: white;
 	padding: 50px 0;
+	@media screen and (max-width: 550px) {
+		padding-bottom: 70px;
+	}
 `;
 const Title = styled.h1`
 	font-size: 4rem;
@@ -16,13 +20,19 @@ const Title = styled.h1`
 `;
 const Desc = styled.p`
 	color: gray;
+	text-align: center;
 `;
 const ColumnsWrapper = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 30px;
+	// display: grid;
+	// grid-template-columns: 1fr 1fr;
+	display: flex;
+	justify-content: space-around;
 	img {
 		max-width: 100%;
+	}
+	@media screen and (max-width: 550px) {
+		flex-direction: column-reverse;
+		gap: 30px;
 	}
 `;
 const Column = styled.div`
@@ -38,6 +48,12 @@ const ButtonsWrapper = styled.div`
 `;
 
 const Featured = ({ product }) => {
+	const { addProductToCart } = useContext(CartContext);
+
+	function addFeaturedToCart() {
+		addProductToCart(product._id);
+	}
+
 	return (
 		<Bg>
 			<Center>
@@ -50,7 +66,7 @@ const Featured = ({ product }) => {
 							<ButtonLink href={"/products/" + product._id}>
 								Leer más...
 							</ButtonLink>
-							<PrimaryBtn>Agregar al carrito</PrimaryBtn>
+							<PrimaryBtn onClick={addFeaturedToCart}>Comprar</PrimaryBtn>
 						</ButtonsWrapper>
 					</Column>
 					<Column>

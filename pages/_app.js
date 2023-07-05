@@ -1,19 +1,23 @@
 import { createGlobalStyle } from "styled-components";
+import { CartContextProvider } from "../components/CartContext";
 
 const GlobalStyles = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
     body {
         padding: 0;
         margin: 0;
         scroll: smooth;
-        font-family: 'Roboto', sans-serif
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+    }
 `;
 
 function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<GlobalStyles />
-			<Component {...pageProps} />
+			<CartContextProvider>
+				<Component {...pageProps} />
+			</CartContextProvider>
 		</>
 	);
 }
