@@ -1,11 +1,11 @@
-import { css, styled } from "styled-components";
+import { styled } from "styled-components";
 import { my_blue } from "../lib/colors";
 
-export const PrimButtonStyle = css`
+const StyledPrimButton = styled.button`
 	background-color: ${my_blue};
 	color: white;
 	border: solid 3px ${my_blue};
-	padding: 5px 25px;
+	padding: 5px 20px;
 	border-radius: 6px;
 	width: fit-content;
 	cursor: pointer;
@@ -17,12 +17,8 @@ export const PrimButtonStyle = css`
 	}
 `;
 
-const StyledButton = styled.button`
-	${PrimButtonStyle}
-`;
-
 const PrimaryBtn = ({ children, ...rest }) => {
-	return <StyledButton {...rest}>{children}</StyledButton>;
+	return <StyledPrimButton {...rest}>{children}</StyledPrimButton>;
 };
 
 export default PrimaryBtn;
