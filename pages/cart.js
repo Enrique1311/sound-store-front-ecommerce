@@ -66,6 +66,11 @@ const ProductImage = styled.div`
 	}
 `;
 
+const CityHolder = styled.div`
+	display: flex;
+	gap: 5px;
+`;
+
 const TotalPrice = styled.div`
 	background-color: ${my_medium_grey};
 	margin-top: 20px;
@@ -79,12 +84,20 @@ const CartPage = () => {
 	const { cartProducts, addProductToCart, removeProductFromCart } =
 		useContext(CartContext);
 	const [products, setProducts] = useState([]);
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [city, setCity] = useState("");
+	const [postalCode, setPostalCode] = useState("");
+	const [streetAddress, setStreetAddress] = useState("");
+	const [province, setProvince] = useState("");
 
 	useEffect(() => {
 		if (cartProducts.length > 0) {
 			axios.post("/api/cart", { ids: cartProducts }).then((response) => {
 				setProducts(response.data);
 			});
+		} else {
+			setProducts([]);
 		}
 	}, [cartProducts]);
 
@@ -178,32 +191,63 @@ const CartPage = () => {
 					{!!cartProducts?.length && (
 						<Box>
 							<h2>Información de la compra</h2>
-							<Input
-								type="text"
-								placeholder="Nombre"
-							/>
-							<Input
-								type="text"
-								placeholder="Email"
-							/>
-
-							<Input
-								type="text"
-								placeholder="Localidad"
-							/>
-							<Input
-								type="text"
-								placeholder="Código postal"
-							/>
-							<Input
-								type="text"
-								placeholder="Calle y número"
-							/>
-							<Input
-								type="text"
-								placeholder="Provincia"
-							/>
-							<PrimaryBtn>Continuar compra</PrimaryBtn>
+							<form
+								method="post"
+								action="/api/checkout"
+							>
+								{" "}
+								<Input
+									type="text"
+									placeholder="Nombre"
+									value={name}
+									name="name"
+									onChange={(event) => setName(event.target.value)}
+								/>
+								<Input
+									type="text"
+									placeholder="Email"
+									value={email}
+									name="email"
+									onChange={(event) => setEmail(event.target.value)}
+								/>
+								<CityHolder>
+									{" "}
+									<Input
+										type="text"
+										placeholder="Localidad"
+										value={city}
+										name="city"
+										onChange={(event) => setCity(event.target.value)}
+									/>
+									<Input
+										type="number"
+										placeholder="Código postal"
+										value={postalCode}
+										name="postalCode"
+										onChange={(event) => setPostalCode(event.target.value)}
+									/>
+								</CityHolder>
+								<Input
+									type="text"
+									placeholder="Calle y número"
+									value={streetAddress}
+									name="streetAddress"
+									onChange={(event) => setStreetAdress(event.target.value)}
+								/>
+								<Input
+									type="text"
+									placeholder="Provincia"
+									value={province}
+									name="province"
+									onChange={(event) => setProvince(event.target.value)}
+								/>
+								<input
+									type="hidden"
+									name="products"
+									value={cartProducts.join(",")}
+								/>
+								<PrimaryBtn type="submit">Continuar compra</PrimaryBtn>
+							</form>
 						</Box>
 					)}
 				</ColumnsWrapper>
